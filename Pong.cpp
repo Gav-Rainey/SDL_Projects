@@ -74,6 +74,10 @@ private:
 			if (state[SDL_SCANCODE_ESCAPE]) {
 				mIsRunning = false;
 			}
+			else if (state[SDL_SCANCODE_SPACE]) {
+				mBallVel.x = 200;
+				mBallVel.y = -200;
+			}
 
 			switch (event.type) {
 			case SDL_QUIT:
@@ -148,7 +152,6 @@ private:
 
 			if (mBallPos.y <= mPlayer1Pos.y + paddleH && mBallPos.y >= mPlayer1Pos.y - paddleH) {
 				mBallVel.x *= -1;
-				SDL_Log("%.2f", mBallPos.x);
 			}
 			else {
 				mBallVel.x *= 1;
@@ -164,7 +167,12 @@ private:
 			}
 		}
 
-		if (mBallPos.x <= -30 || mBallPos.x >= 680) {
+		if (mBallPos.x <= 0) {
+			SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_INFORMATION, "Winner", "Player 2 Wins", mWindow);
+			mIsRunning = false;
+		}
+		else if (mBallPos.x >= 640) {
+			SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_INFORMATION, "Winner", "Player 1 Wins", mWindow);
 			mIsRunning = false;
 		}
 
@@ -272,8 +280,8 @@ private:
 	Vector2 mPlayer2Pos;
 
 	Vector2 mBallVel{
-		200.0f,
-		-200.0f
+		0.0f,
+		0.0f
 	};
 
 	int mPlayer1Dir;

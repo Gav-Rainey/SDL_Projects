@@ -67,7 +67,9 @@ private:
 
 			const Uint8* state(SDL_GetKeyboardState(NULL));
 
-
+			if (state[SDL_SCANCODE_ESCAPE]) {
+				isRunning = false;
+			}
 
 		}
 
